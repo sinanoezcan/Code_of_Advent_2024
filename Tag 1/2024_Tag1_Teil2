@@ -1,0 +1,19 @@
+simiScore = 0
+links = []
+rechts = []
+    
+with open("inputTag1.txt") as file:
+    for line in file:
+        teilen = line.split()
+        links.append(int(teilen[0]))
+        rechts.append(int(teilen[1]))
+
+for zahl_links in links:
+    appearance = 0
+    for zahl_rechts in rechts:
+        if zahl_links == zahl_rechts:
+            appearance += 1
+
+    simiScore += zahl_links * appearance
+    
+print(simiScore)

@@ -1,0 +1,19 @@
+links = []
+rechts = []
+
+
+with open("inputTag1.txt") as file:
+    for line in file:
+        teilen = line.split()
+        links.append(int(teilen[0]))
+        rechts.append(int(teilen[1]))
+
+list.sort(links)
+list.sort(rechts)
+
+summenListe = []
+
+for i in range(len(links)):
+    summenListe.append(abs(links[i] - rechts[i]))
+
+print (sum(summenListe))

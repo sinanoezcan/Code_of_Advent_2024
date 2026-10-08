@@ -1,0 +1,37 @@
+reports = []
+
+with open("inputTag2.txt") as file:
+    for line in file:
+        levels = []
+        zahlen = line.split()
+        for zahl in zahlen:
+            levels.append(int(zahl))
+        reports.append(levels)
+
+def is_safe(levels):
+    sinkend = levels[0] > levels[1]
+
+    for i in range(len(levels) - 1):
+        paar_sinkt = levels[i] > levels[i+1]
+        if paar_sinkt != sinkend:
+            return False
+        x = levels[i] - levels[i+1]
+        if not(1 <= abs(x) <= 3):
+            return False
+    return True
+
+def sonderKondition(levels):
+    if is_safe(levels):
+        return True
+    for i in range(len(levels)):
+        kopie = levels[:i] + levels[i+1:]
+        if is_safe(kopie):
+            return True
+    return False
+
+safeReports = 0
+for levels in reports:
+    if sonderKondition(levels):
+        safeReports += 1
+
+print(safeReports)

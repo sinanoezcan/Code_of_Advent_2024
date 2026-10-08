@@ -1,0 +1,18 @@
+import re
+
+with open("inputTag3.txt") as file:
+    text = file.read()
+
+pattern = r"mul\(\d{1,3},\d{1,3}\)"
+
+mulList = re.findall(pattern, text)
+
+summe = 0
+zahlenMuster = r"\d{1,3}"
+
+for string in mulList:
+    zahlen = re.findall(zahlenMuster, string)
+    ergebnisZahl = int(zahlen[0]) * int(zahlen[1])
+    summe += ergebnisZahl
+
+print(summe)
