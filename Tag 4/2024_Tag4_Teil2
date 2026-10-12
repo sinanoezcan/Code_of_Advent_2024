@@ -1,0 +1,17 @@
+gitter = []
+
+with open("inputTag4.txt") as file:
+    for line in file:
+        gitter.append(line.strip())
+
+anzahl = 0
+
+for z in range(1, len(gitter) - 1):
+    for s in range(1, len(gitter[0]) - 1):
+        if gitter[z][s] == "A":
+            diagonale1 = gitter[z - 1][s - 1] + gitter[z + 1][s + 1]
+            diagonale2 = gitter[z - 1][s + 1] + gitter[z + 1][s - 1]
+            if diagonale1 in ("MS", "SM") and diagonale2 in ("MS", "SM"):
+                anzahl += 1
+
+print(anzahl)
