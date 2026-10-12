@@ -1,0 +1,46 @@
+# Advent of Code 2024 - Tag 5, Teil 2
+
+regeln = []
+updates = []
+
+with open("inputTag5.txt") as file:
+    for line in file:
+        line = line.strip()
+        if "|" in line:
+            vorher, nachher = line.split("|")
+            regeln.append((int(vorher), int(nachher)))
+        elif "," in line:
+            seiten = []
+            for zahl in line.split(","):
+                seiten.append(int(zahl))
+            updates.append(seiten)
+
+
+def ist_richtig_sortiert(seiten):
+    for vorher, nachher in regeln:
+        if vorher in seiten and nachher in seiten:
+            if seiten.index(vorher) > seiten.index(nachher):
+                return False
+    return True
+
+
+def sortieren(seiten):
+    seiten = seiten.copy()
+    # So lange Regelverstoesse durch Tauschen beheben, bis alles passt
+    while not ist_richtig_sortiert(seiten):
+        for vorher, nachher in regeln:
+            if vorher in seiten and nachher in seiten:
+                i = seiten.index(vorher)
+                j = seiten.index(nachher)
+                if i > j:
+                    seiten[i], seiten[j] = seiten[j], seiten[i]
+    return seiten
+
+
+summe = 0
+for seiten in updates:
+    if not ist_richtig_sortiert(seiten):
+        sortiert = sortieren(seiten)
+        summe += sortiert[len(sortiert) // 2]
+
+print(summe)
