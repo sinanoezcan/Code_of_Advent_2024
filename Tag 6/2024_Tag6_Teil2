@@ -1,0 +1,52 @@
+gitter = []
+
+with open("inputTag6.txt") as file:
+    for line in file:
+        gitter.append(line.strip())
+
+for z in range(len(gitter)):
+    for s in range(len(gitter[0])):
+        if gitter[z][s] == "^":
+            start_zeile = z
+            start_spalte = s
+
+richtungen = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+
+def laufen(hindernis):
+    zeile = start_zeile
+    spalte = start_spalte
+    richtung = 0
+    besucht = set()
+    zustaende = set()
+
+    while True:
+        zustand = (zeile, spalte, richtung)
+        if zustand in zustaende:
+            return None
+        zustaende.add(zustand)
+        besucht.add((zeile, spalte))
+
+        dz, ds = richtungen[richtung]
+        naechste_zeile = zeile + dz
+        naechste_spalte = spalte + ds
+
+        if not (0 <= naechste_zeile < len(gitter) and 0 <= naechste_spalte < len(gitter[0])):
+            return besucht
+
+        if gitter[naechste_zeile][naechste_spalte] == "#" or (naechste_zeile, naechste_spalte) == hindernis:
+            richtung = (richtung + 1) % 4
+        else:
+            zeile = naechste_zeile
+            spalte = naechste_spalte
+
+normaler_weg = laufen(None)
+
+anzahl = 0
+for feld in normaler_weg:
+    if feld == (start_zeile, start_spalte):
+        continue
+    if laufen(feld) is None:
+        anzahl += 1
+
+print(anzahl)
