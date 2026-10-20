@@ -1,0 +1,27 @@
+gitter = []
+richtungen = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, 1), (-1, -1), (1, -1)]
+zaehler = 0
+MAS = ["M","A","S"]
+
+with open("inputTag4.txt") as file:
+    for line in file:
+        gitter.append(line.strip())
+
+for z in range(len(gitter)):
+    for s in range(len(gitter[z])):
+        if gitter[z][s] == "X":
+            for dz, ds in richtungen:
+                passt = True
+                for schritt in range(1,4):
+                    nz = z + schritt*dz
+                    ns = s + schritt*ds
+                    if not (0 <= nz < len(gitter) and 0 <= ns < len(gitter[0])):
+                        passt = False
+                        break
+                    if MAS[schritt - 1] != gitter[nz][ns]:
+                        passt = False
+                        break
+                if passt:
+                    zaehler += 1
+
+print(zaehler)

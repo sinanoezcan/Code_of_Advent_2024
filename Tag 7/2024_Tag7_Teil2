@@ -1,0 +1,31 @@
+gleichungen = []
+
+with open("inputTag7.txt") as file:
+    for line in file:
+        ziel_text, zahlen_text = line.split(":")
+        zahlen = []
+        for zahl in zahlen_text.split():
+            zahlen.append(int(zahl))
+        gleichungen.append((int(ziel_text), zahlen))
+
+
+def ist_moeglich(ziel, zahlen):
+    ergebnisse = [zahlen[0]]
+
+    for zahl in zahlen[1:]:
+        neue_ergebnisse = []
+        for wert in ergebnisse:
+            neue_ergebnisse.append(wert + zahl)
+            neue_ergebnisse.append(wert * zahl)
+            neue_ergebnisse.append(int(str(wert) + str(zahl)))
+        ergebnisse = neue_ergebnisse
+
+    return ziel in ergebnisse
+
+
+summe = 0
+for ziel, zahlen in gleichungen:
+    if ist_moeglich(ziel, zahlen):
+        summe += ziel
+
+print(summe)
